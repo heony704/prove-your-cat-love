@@ -1,22 +1,27 @@
-# <div align=center>고양이 정말 좋아하세요? </div>
+<h1 align=center>고양이 정말 좋아하세요?</h1>
 
 <div align=center>
   <img src="https://img.shields.io/badge/react-61DAFB?style=flat&logo=react&logoColor=black">
   <img src="https://img.shields.io/badge/vite-646CFF?style=flat&logo=vite&logoColor=white">
   <img src="https://img.shields.io/badge/typescript-3178C6?style=flat&logo=typescript&logoColor=white">
   <img src="https://img.shields.io/badge/styled components-DB7093?style=flat&logo=styledcomponents&logoColor=white">
-
 </div>
+<br>
 
-![play](https://github.com/heony704/prove-your-cat-love/assets/36994104/7cf22d5e-26b4-4ba1-af96-0a9cc4942d6a)
+<div align=center>
+  <img src="https://github.com/heony704/prove-your-cat-love/assets/36994104/7cf22d5e-26b4-4ba1-af96-0a9cc4942d6a" width="700">
+</div>
+<br>
 
-고양이 정보랑 고양이 자랑을 담아 만든 퀴즈게임 사이트입니다.  
-고양이 애호가라면 쉽게 고득점을 얻을 수 있습니다.  
+<div align=center>
+고양이 정보랑 고양이 자랑을 담아 만든 퀴즈게임 사이트입니다.<br>
+고양이 애호가라면 쉽게 고득점을 얻을 수 있습니다.<br>
 퀴즈를 세번 틀리거나 퀴즈가 세개 넘게 쌓일 경우 게임이 끝나니 주의하세요.
+</div>
 
 ## 기능
 
-- [x] 랜덤 퀴즈 발생
+- [x] 랜덤 내용, 위치, 스타일의 퀴즈 발생
 - [x] 퀴즈가 점점 빠르게 발생
 - [x] 특정 점수에 도달할 경우 Toast로 점수 표시
 - [x] 퀴즈를 세번 틀리거나 퀴즈가 세개 넘게 쌓일 경우 게임오버
@@ -24,7 +29,7 @@
 
 ## 프로젝트 구조
 
-```js
+```c
 src
  ┣ assets // 고양이 사진 모음
  ┣ components
@@ -107,19 +112,19 @@ export function useIntervalRandomQuiz() {
 
 ### 1. 프로젝트 복제
 
-```
+```bash
 git clone https://github.com/heony704/prove-your-cat-love.git
 cd prove-your-cat-love
 ```
 
 ### 2. 프로젝트에 필요한 라이브러리 설치
 
-```
+```bash
 yarn
 ```
 
 ### 3. 로컬 환경에서 실행
 
-```
+```bash
 yarn dev
 ```
