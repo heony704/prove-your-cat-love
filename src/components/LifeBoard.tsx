@@ -1,21 +1,14 @@
 import React from 'react';
 import { styled } from 'styled-components';
-import Picture from 'src/components/Picture';
+import FishImage from 'src/assets/fish.png';
 
 type LifeBoardProps = {
   life: number;
 };
 
 function LifeBoard({ life }: LifeBoardProps) {
-  const lifeImageName = 'fish';
-
   const Lives = Array.from({ length: life }, (_, index) => (
-    <Picture
-      key={index}
-      name={lifeImageName}
-      defaultFormat="png"
-      style={{ width: '6rem' }}
-    />
+    <Image key={index} alt="fish" src={FishImage} />
   ));
 
   return <Wrapper>{Lives}</Wrapper>;
@@ -35,4 +28,8 @@ const Wrapper = styled.div`
   > * + * {
     margin-left: 1rem;
   }
+`;
+
+const Image = styled.img`
+  width: 6rem;
 `;

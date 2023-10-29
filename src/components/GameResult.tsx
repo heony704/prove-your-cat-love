@@ -1,7 +1,6 @@
 import { getStyleByScore } from 'src/data/scoreTheme';
 import { styled } from 'styled-components';
 import { HiX } from 'react-icons/hi';
-import Picture from 'src/components/Picture';
 import { Theme } from 'src/types';
 
 type GameReultProps = {
@@ -21,14 +20,7 @@ export default function GameResult({ score, onClose }: GameReultProps) {
           </CloseButton>
         </ButtonWrapper>
         <Contents>
-          <Picture
-            name={img}
-            style={{
-              width: '100%',
-              height: '17rem',
-              borderRadius: '0.5rem',
-            }}
-          />
+          <Image alt={img} src={`src/assets/${img}.jpg`} />
           <Text>{score} 만큼 사랑해</Text>
         </Contents>
       </Card>
@@ -86,6 +78,12 @@ const Contents = styled.div`
   flex-direction: column;
   justify-content: space-between;
   padding: 0.2rem 2.75rem 1.2rem 2.75rem;
+`;
+
+const Image = styled.img`
+  height: 17rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
 `;
 
 const Text = styled.p`
