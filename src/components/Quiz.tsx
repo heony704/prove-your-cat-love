@@ -3,6 +3,7 @@ import { getQuizThemeByColor } from 'src/data/quizTheme';
 import { HiExclamationCircle } from 'react-icons/hi';
 import { QuizProps, Theme, QuizPosition } from 'src/types';
 
+import Picture from 'src/components/Picture';
 import QuizButton from 'src/components/QuizButton';
 
 export default function Quiz({
@@ -21,7 +22,16 @@ export default function Quiz({
         <HiExclamationCircle />
         <h3>QUIZ</h3>
       </Title>
-      {image !== undefined && <Image alt={image.alt} src={image.src} />}
+      {image !== undefined && (
+        <Picture
+          name={image.alt}
+          style={{
+            width: '100%',
+            height: '15rem',
+            borderRadius: '0.5rem',
+          }}
+        />
+      )}
       <Contents>{contents}</Contents>
       <ButtonWrapper>
         <QuizButton
@@ -70,12 +80,6 @@ const Title = styled.div`
     line-height: 2rem;
     margin: 0;
   }
-`;
-
-const Image = styled.img`
-  height: 15rem;
-  object-fit: cover;
-  border-radius: 0.5rem;
 `;
 
 const Contents = styled.p`

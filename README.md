@@ -31,11 +31,11 @@
 
 ```c
 src
- ┣ assets // 고양이 사진 모음
  ┣ components
  ┃ ┣ Game.tsx // 게임 로직이 동작하는 컴포넌트
  ┃ ┣ GameResult.tsx // 게임 결과를 보여주는 컴포넌트
  ┃ ┣ LifeBoard.tsx // 목숨을 나타내는 컴포넌트
+ ┃ ┣ Picture.tsx // 이미지를 보여주는 컴포넌트
  ┃ ┣ Quiz.tsx // 퀴즈 컴포넌트
  ┃ ┣ QuizButton.tsx // 퀴즈 타입에 따라 다른 버튼들을 반환하는 컴포넌트
  ┃ ┣ ScoreAlarm.tsx // 점수를 알려주는 Toast 컴포넌트
@@ -72,7 +72,7 @@ src
 `Game` 컴포넌트 안의 퀴즈 관련 상태가 변하면 life, score 값이 변하지 않더라도 `LifeBaord`, `ScoreBoard` 컴포넌트가 리렌더링되는 문제가 있었습니다.  
 `LifeBaord`, `ScoreBoard` 컴포넌트를 `React.memo`로 감싸 life, score 상태가 변하지 않는다면 리렌더링되지 않도록 최적화했습니다.
 
-```ts
+```tsx
 import React from 'react';
 
 function LifeBoard({ life }: LifeBoardProps) {
@@ -86,7 +86,7 @@ export default React.memo(LifeBoard);
 `Game` 컴포넌트가 리렌더링될 때 `useIntervalRandomQuiz`, `useScoreAlarm` 훅에서 반환한 컴포넌트 값도 함수이기 때문에 같이 리렌더링되는 문제가 발생했습니다.  
 `useIntervalRandomQuiz`, `useScoreAlarm` 훅에서 반환한 컴포넌트(함수)에 `useCallback`을 적용해 dependencies 값이 변경되었을 때만 컴포넌트(함수)를 리렌더링하도록 최적화했습니다.
 
-```ts
+```tsx
 import { useCallback } from 'react';
 
 export function useIntervalRandomQuiz() {
@@ -105,6 +105,33 @@ export function useIntervalRandomQuiz() {
   return { quizzes, Quizzes };
 }
 ```
+
+### 이미지 사이즈 최적화
+
+이미지 파일 크기가 커서 로드하는 데 많은 시간이 걸리는 문제가 있어 다음과 같이 최적화했습니다.
+
+- 기존 이미지 파일 크기를 화면에 표시된 너비의 두 배 크기로 줄임
+
+- 압축 효율이 더 좋은 webp 이미지 파일을 만들어 webp 호환 브라우저는 webp 파일을, 그렇지 않은 브라우저는 jpg 혹은 png 파일을 로드
+  ```tsx
+  export default function Picture() {
+    // ...
+    return (
+      <picture>
+        <source srcSet={`${ImgSrc}.webp`} type="image/webp" />
+        <img src={`${ImgSrc}.${defaultFormat}`} alt={name} />
+      </picture>
+    );
+  }
+  ```
+
+프로젝트에 사용된 총 34개의 이미지 파일의 최적화에 따른 크기 변화입니다.
+
+|             | 파일 크기 | 기존에 비해 감소한 비율 |
+| ----------- | --------- | ----------------------- |
+| 기존        | 14.3MB    | -                       |
+| 사이즈 감소 | 4.9MB     | **66%**                 |
+| webp로 변환 | 1.1MB     | **92%**                 |
 
 ## 직접 실행하기
 
