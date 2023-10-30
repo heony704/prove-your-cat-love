@@ -133,6 +133,8 @@ export function useIntervalRandomQuiz() {
 | 사이즈 감소 | 4.9MB     | **66%**                 |
 | webp로 변환 | 1.1MB     | **92%**                 |
 
+자세한 내용은 [리액트 이미지 사이즈 최적화](https://heony704.github.io/react-image-size-optimization/) 포스트와 [Pull Request](https://github.com/heony704/prove-your-cat-love/pull/4)에서 확인할 수 있습니다.
+
 ## 직접 실행하기
 
 해당 프로젝트를 clone해서 로컬 환경에서 직접 실행할 수 있습니다.
