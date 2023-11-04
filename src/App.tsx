@@ -1,17 +1,30 @@
-import { useBooleanState } from 'src/hooks/useBooleanState';
 import { styled } from 'styled-components';
+import { useGameState } from 'src/hooks/useGameState';
+import { useScore } from 'src/hooks/useScore';
 import Game from 'src/components/Game';
+import GameResult from 'src/components/GameResult';
 
 export default function App() {
-  const [isGaming, startGame, endGame] = useBooleanState(false);
+  const { gameState, readyGame, startGame, endGame } = useGameState();
+  const { score, raiseScore, resetScore } = useScore();
+
+  const onGameResultClose = () => {
+    readyGame();
+    resetScore();
+  };
 
   return (
     <>
       <Title>고양이 정말 좋아하세요?</Title>
-      <StartButton onClick={startGame} disabled={isGaming}>
+      <StartButton onClick={startGame} disabled={gameState !== 'ready'}>
         증명하기
       </StartButton>
-      {isGaming && <Game endGame={endGame} />}
+      {gameState === 'playing' && (
+        <Game score={score} raiseScore={raiseScore} endGame={endGame} />
+      )}
+      {gameState === 'over' && (
+        <GameResult score={score} onClose={onGameResultClose} />
+      )}
     </>
   );
 }
