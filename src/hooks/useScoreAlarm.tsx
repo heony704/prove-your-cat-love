@@ -1,9 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useScore } from 'src/contexts/ScoreContext';
 import ScoreAlarm from 'src/components/ScoreAlarm';
 
-export function useScoreAlarm(score: number) {
-  const [alarmMode, setAlarmMode] = useState(false);
+export function useScoreAlarm() {
+  const score = useScore();
 
+  const [alarmMode, setAlarmMode] = useState(false);
   const showAlarm = () => {
     setAlarmMode(true);
   };
@@ -24,7 +26,7 @@ export function useScoreAlarm(score: number) {
   }, [score]);
 
   const AlarmContainer = useCallback(() => {
-    return <>{alarmMode && <ScoreAlarm score={score} onClose={hideAlarm} />}</>;
+    return <>{alarmMode && <ScoreAlarm onClose={hideAlarm} />}</>;
   }, [alarmMode]);
 
   return { ScoreAlarm: AlarmContainer, alarmScore: showAlarm };

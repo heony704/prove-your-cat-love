@@ -1,12 +1,13 @@
-import { getThemeByScore } from 'src/data/scoreTheme';
 import { styled } from 'styled-components';
+import { useScore } from 'src/contexts/ScoreContext';
+import { getThemeByScore } from 'src/data/scoreTheme';
 
 type ScoreAlarmProps = {
-  score: number;
   onClose: () => void;
 };
 
-export default function ScoreAlarm({ score, onClose }: ScoreAlarmProps) {
+export default function ScoreAlarm({ onClose }: ScoreAlarmProps) {
+  const score = useScore();
   const { background, point } = getThemeByScore(score);
 
   return (

@@ -1,16 +1,35 @@
-import { getStyleByScore } from 'src/data/scoreTheme';
 import { styled } from 'styled-components';
 import { HiX } from 'react-icons/hi';
+import {
+  useGameState,
+  useGameStateDispatch,
+} from 'src/contexts/GameStateContext';
+import { useScore, useScoreDispatch } from 'src/contexts/ScoreContext';
+import { getStyleByScore } from 'src/data/scoreTheme';
 import Picture from 'src/components/Picture';
 import { Theme } from 'src/types';
 
-type GameReultProps = {
-  score: number;
-  onClose: () => void;
-};
+export default function GameResult() {
+  const score = useScore();
+  const scoreDispatch = useScoreDispatch();
+  const resetScore = () => {
+    scoreDispatch({ type: 'RESET' });
+  };
 
-export default function GameResult({ score, onClose }: GameReultProps) {
+  const gameState = useGameState();
+  const gameStateDispatch = useGameStateDispatch();
+  const readyGame = () => {
+    gameStateDispatch({ type: 'READY' });
+  };
+
   const { theme, img } = getStyleByScore(score);
+
+  const onClose = () => {
+    readyGame();
+    resetScore();
+  };
+
+  if (gameState !== 'over') return;
 
   return (
     <Wrapper>

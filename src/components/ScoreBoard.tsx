@@ -1,11 +1,9 @@
 import React from 'react';
 import { styled } from 'styled-components';
+import { useScore } from 'src/contexts/ScoreContext';
 
-type ScoreBoardProps = {
-  score: number;
-};
-
-function ScoreBoard({ score }: ScoreBoardProps) {
+function ScoreBoard() {
+  const score = useScore();
   return <Wrapper>SCORE: {score}</Wrapper>;
 }
 

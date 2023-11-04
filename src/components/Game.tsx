@@ -3,21 +3,35 @@ import { useLife } from 'src/hooks/useLife';
 import { useIntervalRandomQuiz } from 'src/hooks/useIntervalRandomQuiz';
 import { useDecreasingDelay } from 'src/hooks/useDecreasingDelay';
 import { useScoreAlarm } from 'src/hooks/useScoreAlarm';
+import {
+  useGameState,
+  useGameStateDispatch,
+} from 'src/contexts/GameStateContext';
+import { useScoreDispatch } from 'src/contexts/ScoreContext';
 
 import LifeBoard from 'src/components/LifeBoard';
 import ScoreBoard from 'src/components/ScoreBoard';
 
-type GameProps = {
-  score: number;
-  raiseScore: () => void;
-  endGame: () => void;
-};
+export default function GamePlayer() {
+  const gameState = useGameState();
+  return <>{gameState === 'playing' && <Game />}</>;
+}
 
-export default function Game({ score, raiseScore, endGame }: GameProps) {
+function Game() {
   const { life, loseLife } = useLife(3);
 
+  const gameStateDispatch = useGameStateDispatch();
+  const endGame = () => {
+    gameStateDispatch({ type: 'END' });
+  };
+
+  const scoreDispatch = useScoreDispatch();
+  const raiseScore = () => {
+    scoreDispatch({ type: 'RAISE' });
+  };
+
   // 퀴즈 가속도 설정
-  const { delay, clearDelay } = useDecreasingDelay(2500, 500, 25);
+  const { delay } = useDecreasingDelay(2500, 500, 25);
 
   // 랜덤 퀴즈 발생
   const quizHandler = {
@@ -32,19 +46,16 @@ export default function Game({ score, raiseScore, endGame }: GameProps) {
 
   // 퀴즈를 3번 틀리거나 퀴즈가 3개 넘게 쌓일 경우 게임오버
   useEffect(() => {
-    if (life < 1 || quizzes.length > 3) {
-      endGame();
-      clearDelay();
-    }
+    if (life < 1 || quizzes.length > 3) endGame();
   }, [life, quizzes]);
 
   // 점수 알림
-  const { ScoreAlarm } = useScoreAlarm(score);
+  const { ScoreAlarm } = useScoreAlarm();
 
   return (
     <>
       <ScoreAlarm />
-      <ScoreBoard score={score} />
+      <ScoreBoard />
       <LifeBoard life={life} />
       <Quizzes />
     </>
