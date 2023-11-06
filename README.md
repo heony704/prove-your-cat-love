@@ -38,8 +38,9 @@ src
  ┃ ┣ Picture.tsx // 이미지를 보여주는 컴포넌트
  ┃ ┣ Quiz.tsx // 퀴즈 컴포넌트
  ┃ ┣ QuizButton.tsx // 퀴즈 타입에 따라 다른 버튼들을 반환하는 컴포넌트
- ┃ ┣ ScoreAlarm.tsx // 점수를 알려주는 Toast 컴포넌트
- ┃ ┗ ScoreBoard.tsx // 점수를 나타내는 컴포넌트
+ ┃ ┣ ScoreAlarm.tsx // 점수를 알려주는 토스트 컴포넌트
+ ┃ ┣ ScoreBoard.tsx // 점수를 나타내는 컴포넌트
+ ┃ ┗ Toast.tsx // 토스트 컴포넌트
  ┣ data
  ┃ ┣ quiz.ts // 퀴즈 내용 모음
  ┃ ┣ quizTheme.ts // Quiz 컴포넌트 스타일 모음
@@ -52,12 +53,11 @@ src
  ┃ ┣ useLife.ts // 목숨을 상태로 사용하는 훅
  ┃ ┣ useQuizzes.ts // Quiz 컴포넌트에 필요한 props들을 배열로 사용하는 훅
  ┃ ┣ useScore.ts // 점수를 상태로 사용하는 훅
- ┃ ┗ useScoreAlarm.tsx // ScoreAlarm을 사용하는 훅
- ┣ pages
- ┃ ┗ MainPage.tsx // 시작 화면
+ ┃ ┗ useToast.tsx // Toast를 사용하는 훅
  ┣ types
  ┃ ┗ index.ts // 여러 컴포넌트에서 쓰이는 타입 모음
  ┣ utils
+ ┃ ┣ getImageSrc.ts // 이미지 URL을 반환하는 함수
  ┃ ┗ random.ts // 여러 랜덤 값을 반환하는 함수 모음
  ┣ App.tsx
  ┣ index.css
@@ -83,8 +83,8 @@ function LifeBoard({ life }: LifeBoardProps) {
 export default React.memo(LifeBoard);
 ```
 
-`Game` 컴포넌트가 리렌더링될 때 `useIntervalRandomQuiz`, `useScoreAlarm` 훅에서 반환한 컴포넌트 값도 함수이기 때문에 같이 리렌더링되는 문제가 발생했습니다.  
-`useIntervalRandomQuiz`, `useScoreAlarm` 훅에서 반환한 컴포넌트(함수)에 `useCallback`을 적용해 dependencies 값이 변경되었을 때만 컴포넌트(함수)를 리렌더링하도록 최적화했습니다.
+`Game` 컴포넌트가 리렌더링될 때 `useIntervalRandomQuiz`, `useToast` 훅에서 반환한 컴포넌트 값도 함수이기 때문에 같이 리렌더링되는 문제가 발생했습니다.  
+`useIntervalRandomQuiz`, `useToast` 훅에서 반환한 컴포넌트(함수)에 `useCallback`을 적용해 dependencies 값이 변경되었을 때만 컴포넌트(함수)를 리렌더링하도록 최적화했습니다.
 
 ```tsx
 import { useCallback } from 'react';
