@@ -37,7 +37,6 @@ src
  ┃ ┣ LifeBoard.tsx // 목숨을 나타내는 컴포넌트
  ┃ ┣ Picture.tsx // 이미지를 보여주는 컴포넌트
  ┃ ┣ Quiz.tsx // 퀴즈 컴포넌트
- ┃ ┣ QuizButton.tsx // 퀴즈 타입에 따라 다른 버튼들을 반환하는 컴포넌트
  ┃ ┣ ScoreAlarm.tsx // 점수를 알려주는 토스트 컴포넌트
  ┃ ┣ ScoreBoard.tsx // 점수를 나타내는 컴포넌트
  ┃ ┗ Toast.tsx // 토스트 컴포넌트
