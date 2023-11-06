@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { getThemeByScore } from 'src/data/scoreTheme';
 import { useToast } from 'src/hooks/useToast';
 
@@ -6,7 +6,7 @@ type ScoreAlarmProps = {
   score: number;
 };
 
-export default function ScoreAlarm({ score }: ScoreAlarmProps) {
+function ScoreAlarm({ score }: ScoreAlarmProps) {
   const { background, point } = getThemeByScore(score);
 
   const { toast, Toast } = useToast();
@@ -25,3 +25,5 @@ export default function ScoreAlarm({ score }: ScoreAlarmProps) {
 
   return <Toast />;
 }
+
+export default React.memo(ScoreAlarm);
