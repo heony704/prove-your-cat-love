@@ -32,26 +32,29 @@
 ```c
 src
  ┣ components
+ ┃ ┣ ContextProvider.tsx // Context를 제공하는 컴포넌트
  ┃ ┣ Game.tsx // 게임 로직이 동작하는 컴포넌트
  ┃ ┣ GameResult.tsx // 게임 결과를 보여주는 컴포넌트
+ ┃ ┣ GameStartButton.tsx // 게임 시작 버튼 컴포넌트
  ┃ ┣ LifeBoard.tsx // 목숨을 나타내는 컴포넌트
  ┃ ┣ Picture.tsx // 이미지를 보여주는 컴포넌트
  ┃ ┣ Quiz.tsx // 퀴즈 컴포넌트
  ┃ ┣ ScoreAlarm.tsx // 점수를 알려주는 토스트 컴포넌트
  ┃ ┣ ScoreBoard.tsx // 점수를 나타내는 컴포넌트
  ┃ ┗ Toast.tsx // 토스트 컴포넌트
+ ┣ contexts // 컨텍스트
+ ┃ ┣ GameStateContext.tsx
+ ┃ ┗ ScoreContext.tsx
  ┣ data
  ┃ ┣ quiz.ts // 퀴즈 내용 모음
  ┃ ┣ quizTheme.ts // Quiz 컴포넌트 스타일 모음
  ┃ ┗ scoreTheme.ts // 점수 별 ScoreAlarm 컴포넌트 스타일
  ┣ hooks
- ┃ ┣ useBooleanState.ts
  ┃ ┣ useDecreasingDelay.ts // 점점 줄어드는 수를 사용하는 훅
  ┃ ┣ useInterval.ts // setInterval을 사용하는 훅 (by Dan abramov)
  ┃ ┣ useIntervalRandomQuiz.tsx // 특정 간격마다 랜덤으로 발생하는 퀴즈를 사용하는 훅
  ┃ ┣ useLife.ts // 목숨을 상태로 사용하는 훅
  ┃ ┣ useQuizzes.ts // Quiz 컴포넌트에 필요한 props들을 배열로 사용하는 훅
- ┃ ┣ useScore.ts // 점수를 상태로 사용하는 훅
  ┃ ┗ useToast.tsx // Toast를 사용하는 훅
  ┣ types
  ┃ ┗ index.ts // 여러 컴포넌트에서 쓰이는 타입 모음
