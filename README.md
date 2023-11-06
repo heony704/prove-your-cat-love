@@ -71,8 +71,8 @@ src
 
 ### `useCallback`과 `React.memo`를 이용하여 컴포넌트 리렌더링 최적화
 
-`Game` 컴포넌트 안의 퀴즈 관련 상태가 변하면 life, score 값이 변하지 않더라도 `LifeBaord`, `ScoreBoard` 컴포넌트가 리렌더링되는 문제가 있었습니다.  
-`LifeBaord`, `ScoreBoard` 컴포넌트를 `React.memo`로 감싸 life, score 상태가 변하지 않는다면 리렌더링되지 않도록 최적화했습니다.
+`Game` 컴포넌트 안의 퀴즈 관련 상태가 변하면 life, score 값이 변하지 않더라도 `LifeBaord`, `ScoreBoard`, `ScoreAlarm` 컴포넌트가 리렌더링되는 문제가 있었습니다.  
+`LifeBaord`, `ScoreBoard`, `ScoreAlarm` 컴포넌트를 `React.memo`로 감싸 life, score 상태가 변하지 않는다면 리렌더링되지 않도록 최적화했습니다.
 
 ```tsx
 import React from 'react';
