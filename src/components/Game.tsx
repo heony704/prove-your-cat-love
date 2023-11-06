@@ -4,10 +4,10 @@ import { useScore } from 'src/hooks/useScore';
 import { useBooleanState } from 'src/hooks/useBooleanState';
 import { useIntervalRandomQuiz } from 'src/hooks/useIntervalRandomQuiz';
 import { useDecreasingDelay } from 'src/hooks/useDecreasingDelay';
-import { useScoreAlarm } from 'src/hooks/useScoreAlarm';
 
 import LifeBoard from 'src/components/LifeBoard';
 import GameResult from 'src/components/GameResult';
+import ScoreAlarm from 'src/components/ScoreAlarm';
 import ScoreBoard from 'src/components/ScoreBoard';
 
 type GameProps = {
@@ -41,9 +41,6 @@ export default function Game({ endGame }: GameProps) {
     }
   }, [life, quizzes]);
 
-  // 점수 알림
-  const { ScoreAlarm } = useScoreAlarm(score);
-
   // 게임오버 시, 게임 결과 표시
   const onGameResultClose = () => {
     endGame();
@@ -55,7 +52,7 @@ export default function Game({ endGame }: GameProps) {
 
   return (
     <>
-      <ScoreAlarm />
+      <ScoreAlarm score={score} />
       <ScoreBoard score={score} />
       <LifeBoard life={life} />
       <Quizzes />
