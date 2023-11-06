@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useLife } from 'src/hooks/useLife';
 import { useIntervalRandomQuiz } from 'src/hooks/useIntervalRandomQuiz';
 import { useDecreasingDelay } from 'src/hooks/useDecreasingDelay';
-import { useScoreAlarm } from 'src/hooks/useScoreAlarm';
 import {
   useGameState,
   useGameStateDispatch,
@@ -10,6 +9,7 @@ import {
 import { useScoreDispatch } from 'src/contexts/ScoreContext';
 
 import LifeBoard from 'src/components/LifeBoard';
+import ScoreAlarm from 'src/components/ScoreAlarm';
 import ScoreBoard from 'src/components/ScoreBoard';
 
 export default function GamePlayer() {
@@ -48,9 +48,6 @@ function Game() {
   useEffect(() => {
     if (life < 1 || quizzes.length > 3) endGame();
   }, [life, quizzes]);
-
-  // 점수 알림
-  const { ScoreAlarm } = useScoreAlarm();
 
   return (
     <>
