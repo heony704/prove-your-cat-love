@@ -12,7 +12,7 @@ import LifeBoard from 'src/components/LifeBoard';
 import ScoreAlarm from 'src/components/ScoreAlarm';
 import ScoreBoard from 'src/components/ScoreBoard';
 
-export default function GamePlayer() {
+export default function GamePresenter() {
   const gameState = useGameState();
   return <>{gameState === 'playing' && <Game />}</>;
 }

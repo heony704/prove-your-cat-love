@@ -9,14 +9,18 @@ import { getStyleByScore } from 'src/data/scoreTheme';
 import Picture from 'src/components/Picture';
 import { Theme } from 'src/types';
 
-export default function GameResult() {
+export default function GameResultPresenter() {
+  const gameState = useGameState();
+  return <>{gameState === 'over' && <GameResult />}</>;
+}
+
+function GameResult() {
   const score = useScore();
   const scoreDispatch = useScoreDispatch();
   const resetScore = () => {
     scoreDispatch({ type: 'RESET' });
   };
 
-  const gameState = useGameState();
   const gameStateDispatch = useGameStateDispatch();
   const readyGame = () => {
     gameStateDispatch({ type: 'READY' });
@@ -28,8 +32,6 @@ export default function GameResult() {
     readyGame();
     resetScore();
   };
-
-  if (gameState !== 'over') return;
 
   return (
     <Wrapper>
