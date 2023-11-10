@@ -1,20 +1,12 @@
 import { styled } from 'styled-components';
 import { HiX } from 'react-icons/hi';
-import {
-  useGameState,
-  useGameStateDispatch,
-} from 'src/contexts/GameStateContext';
+import { useGameStateDispatch } from 'src/contexts/GameStateContext';
 import { useScore, useScoreDispatch } from 'src/contexts/ScoreContext';
 import { getStyleByScore } from 'src/data/scoreTheme';
 import Picture from 'src/components/Picture';
 import { Theme } from 'src/types';
 
-export default function GameResultPresenter() {
-  const gameState = useGameState();
-  return <>{gameState === 'over' && <GameResult />}</>;
-}
-
-function GameResult() {
+export default function GameResult() {
   const score = useScore();
   const scoreDispatch = useScoreDispatch();
   const resetScore = () => {

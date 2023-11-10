@@ -2,22 +2,14 @@ import { useEffect } from 'react';
 import { useLife } from 'src/hooks/useLife';
 import { useIntervalRandomQuiz } from 'src/hooks/useIntervalRandomQuiz';
 import { useDecreasingDelay } from 'src/hooks/useDecreasingDelay';
-import {
-  useGameState,
-  useGameStateDispatch,
-} from 'src/contexts/GameStateContext';
+import { useGameStateDispatch } from 'src/contexts/GameStateContext';
 import { useScoreDispatch } from 'src/contexts/ScoreContext';
 
 import LifeBoard from 'src/components/LifeBoard';
 import ScoreAlarm from 'src/components/ScoreAlarm';
 import ScoreBoard from 'src/components/ScoreBoard';
 
-export default function GamePresenter() {
-  const gameState = useGameState();
-  return <>{gameState === 'playing' && <Game />}</>;
-}
-
-function Game() {
+export default function Game() {
   const { life, loseLife } = useLife(3);
 
   const gameStateDispatch = useGameStateDispatch();
