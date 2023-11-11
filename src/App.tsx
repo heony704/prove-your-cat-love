@@ -1,23 +1,20 @@
 import { styled } from 'styled-components';
-import {
-  useGameState,
-  useGameStateDispatch,
-} from 'src/contexts/GameStateContext';
+import { useTypedSelector, useTypedDispatch } from 'src/redux/hooks';
+import { start } from 'src/redux/slices/gameState';
 import Game from 'src/components/Game';
 import GameResult from 'src/components/GameResult';
 
 export default function App() {
-  const gameState = useGameState();
-  const gameStateDispatch = useGameStateDispatch();
-
-  const startGame = () => {
-    gameStateDispatch({ type: 'START' });
-  };
+  const gameState = useTypedSelector(state => state.gameState.value);
+  const dispatch = useTypedDispatch();
 
   return (
     <>
       <Title>고양이 정말 좋아하세요?</Title>
-      <StartButton onClick={startGame} disabled={gameState !== 'ready'}>
+      <StartButton
+        onClick={() => dispatch(start())}
+        disabled={gameState !== 'ready'}
+      >
         증명하기
       </StartButton>
       {gameState === 'playing' && <Game />}

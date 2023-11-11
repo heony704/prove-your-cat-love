@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { getThemeByScore } from 'src/data/scoreTheme';
-import { useScore } from 'src/contexts/ScoreContext';
+import { useTypedSelector } from 'src/redux/hooks';
 import { useToast } from 'src/hooks/useToast';
 
 function ScoreAlarm() {
-  const score = useScore();
+  const score = useTypedSelector(state => state.score.value);
   const { background, point } = getThemeByScore(score);
 
   const { toast, Toast } = useToast();
