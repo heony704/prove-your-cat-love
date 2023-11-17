@@ -1,4 +1,4 @@
-<h1 align=center>고양이 정말 좋아하세요?</h1>
+<h1 align=center>[Context] 고양이 정말 좋아하세요?</h1>
 
 <div align=center>
   <img src="https://img.shields.io/badge/react-61DAFB?style=flat&logo=react&logoColor=black">
@@ -33,34 +33,34 @@
 src
  ┣ components
  ┃ ┣ ContextProvider.tsx // Context를 제공하는 컴포넌트
- ┃ ┣ Game.tsx // 게임 로직이 동작하는 컴포넌트
- ┃ ┣ GameResult.tsx // 게임 결과를 보여주는 컴포넌트
- ┃ ┣ GameStartButton.tsx // 게임 시작 버튼 컴포넌트
- ┃ ┣ LifeBoard.tsx // 목숨을 나타내는 컴포넌트
- ┃ ┣ Picture.tsx // 이미지를 보여주는 컴포넌트
- ┃ ┣ Quiz.tsx // 퀴즈 컴포넌트
- ┃ ┣ ScoreAlarm.tsx // 점수를 알려주는 토스트 컴포넌트
- ┃ ┣ ScoreBoard.tsx // 점수를 나타내는 컴포넌트
- ┃ ┗ Toast.tsx // 토스트 컴포넌트
- ┣ contexts // 컨텍스트
- ┃ ┣ GameStateContext.tsx
- ┃ ┗ ScoreContext.tsx
+ ┃ ┣ Game.tsx
+ ┃ ┣ GameResult.tsx
+ ┃ ┣ GameStartButton.tsx
+ ┃ ┣ LifeBoard.tsx
+ ┃ ┣ Picture.tsx
+ ┃ ┣ Quiz.tsx
+ ┃ ┣ ScoreAlarm.tsx
+ ┃ ┣ ScoreBoard.tsx
+ ┃ ┗ Toast.tsx
+ ┣ contexts
+ ┃ ┣ GameStateContext.tsx // 게임 상태 (ready, playing, over) 컨텍스트
+ ┃ ┗ ScoreContext.tsx // 게임 점수 컨텍스트
  ┣ data
- ┃ ┣ quiz.ts // 퀴즈 내용 모음
- ┃ ┣ quizTheme.ts // Quiz 컴포넌트 스타일 모음
- ┃ ┗ scoreTheme.ts // 점수 별 ScoreAlarm 컴포넌트 스타일
+ ┃ ┣ quiz.ts
+ ┃ ┣ quizTheme.ts
+ ┃ ┗ scoreTheme.ts
  ┣ hooks
- ┃ ┣ useDecreasingDelay.ts // 점점 줄어드는 수를 사용하는 훅
- ┃ ┣ useInterval.ts // setInterval을 사용하는 훅 (by Dan abramov)
- ┃ ┣ useIntervalRandomQuiz.tsx // 특정 간격마다 랜덤으로 발생하는 퀴즈를 사용하는 훅
- ┃ ┣ useLife.ts // 목숨을 상태로 사용하는 훅
- ┃ ┣ useQuizzes.ts // Quiz 컴포넌트에 필요한 props들을 배열로 사용하는 훅
- ┃ ┗ useToast.tsx // Toast를 사용하는 훅
+ ┃ ┣ useDecreasingDelay.ts
+ ┃ ┣ useInterval.ts
+ ┃ ┣ useIntervalRandomQuiz.tsx
+ ┃ ┣ useLife.ts
+ ┃ ┣ useQuizzes.ts
+ ┃ ┗ useToast.tsx
  ┣ types
- ┃ ┗ index.ts // 여러 컴포넌트에서 쓰이는 타입 모음
+ ┃ ┗ index.ts
  ┣ utils
- ┃ ┣ getImageSrc.ts // 이미지 URL을 반환하는 함수
- ┃ ┗ random.ts // 여러 랜덤 값을 반환하는 함수 모음
+ ┃ ┣ getImageSrc.ts
+ ┃ ┗ random.ts
  ┣ App.tsx
  ┣ index.css
  ┣ main.tsx
@@ -69,73 +69,57 @@ src
 
 ## 신경 쓴 부분
 
-### `useCallback`과 `React.memo`를 이용하여 컴포넌트 리렌더링 최적화
+### `useReducer`를 사용해 상태 관련 로직 분리
 
-`Game` 컴포넌트 안의 퀴즈 관련 상태가 변하면 life, score 값이 변하지 않더라도 `LifeBaord`, `ScoreBoard`, `ScoreAlarm` 컴포넌트가 리렌더링되는 문제가 있었습니다.  
-`LifeBaord`, `ScoreBoard`, `ScoreAlarm` 컴포넌트를 `React.memo`로 감싸 life, score 상태가 변하지 않는다면 리렌더링되지 않도록 최적화했습니다.
-
-```tsx
-import React from 'react';
-
-function LifeBoard({ life }: LifeBoardProps) {
-  // ...
-  return <Wrapper>{Lives}</Wrapper>;
-}
-
-export default React.memo(LifeBoard);
-```
-
-`Game` 컴포넌트가 리렌더링될 때 `useIntervalRandomQuiz`, `useToast` 훅에서 반환한 컴포넌트 값도 함수이기 때문에 같이 리렌더링되는 문제가 발생했습니다.  
-`useIntervalRandomQuiz`, `useToast` 훅에서 반환한 컴포넌트(함수)에 `useCallback`을 적용해 dependencies 값이 변경되었을 때만 컴포넌트(함수)를 리렌더링하도록 최적화했습니다.
+상태 변경 함수가 2개 이상인 상태는 useReducer를 사용해 상태 관련 로직을 개별 파일로 분리해 유지보수성을 높였습니다.
 
 ```tsx
-import { useCallback } from 'react';
-
-export function useIntervalRandomQuiz() {
+export function GameStateProvider({ children }: GameStateProviderProps) {
+  const [gameState, dispatch] = useReducer(gameStateReducer, 'ready');
   // ...
-
-  const Quizzes = useCallback(() => {
-    return (
-      <>
-        {quizzes.map(quiz => (
-          <Quiz key={quiz.id} {...quiz} />
-        ))}
-      </>
-    );
-  }, [quizzes]);
-
-  return { quizzes, Quizzes };
 }
-```
 
-### 이미지 사이즈 최적화
-
-이미지 파일 크기가 커서 로드하는 데 많은 시간이 걸리는 문제가 있어 다음과 같이 최적화했습니다.
-
-- 기존 이미지 파일 크기를 화면에 표시된 너비의 두 배 크기로 줄임
-
-- 압축 효율이 더 좋은 webp 이미지 파일을 만들어 webp 호환 브라우저는 webp 파일을, 그렇지 않은 브라우저는 jpg 혹은 png 파일을 로드
-  ```tsx
-  export default function Picture() {
-    // ...
-    return (
-      <picture>
-        <source srcSet={`${ImgSrc}.webp`} type="image/webp" />
-        <img src={`${ImgSrc}.${defaultFormat}`} alt={name} />
-      </picture>
-    );
+function gameStateReducer(gameState: GameState, action: Action) {
+  switch (action.type) {
+    case 'READY': {
+      return 'ready';
+    }
+    case 'START': {
+      return 'playing';
+    }
+    case 'END': {
+      return 'over';
+    }
   }
-  ```
+}
+```
 
-프로젝트에 사용된 총 34개의 이미지 파일의 최적화에 따른 크기 변화입니다.
+### `Context API`를 적용하여 변수를 전역적으로 관리
 
-|             | 파일 크기 | 기존에 비해 감소한 비율 |
-| ----------- | --------- | ----------------------- |
-| 기존        | 14.3MB    | -                       |
-| 사이즈 감소 | 4.9MB     | **66%**                 |
-| webp로 변환 | 1.1MB     | **92%**                 |
+주요 컴포넌트인 `Game`, `GameResult` 컴포넌트 모두에서 사용되는 상태들을 Context API를 통해 전역적으로 관리해 props drilling을 줄였습니다.
 
-자세한 내용은 [리액트 이미지 사이즈 최적화](https://heony704.github.io/react-image-size-optimization/) 포스트와 [Pull Request](https://github.com/heony704/prove-your-cat-love/pull/4)에서 확인할 수 있습니다.
+상태와 dispatch의 Context를 각각 만들어 Provider로 넘겨주고 필요한 곳에서 사용할 수 있도록 했습니다.
+
+```tsx
+const GameStateContext = createContext<GameState | null>(null);
+const GameStateDispatchContext = createContext<GameStateDispatch | null>(null);
+
+export function GameStateProvider({ children }: GameStateProviderProps) {
+  const [gameState, dispatch] = useReducer(gameStateReducer, 'ready');
+
+  return (
+    <GameStateContext.Provider value={gameState}>
+      <GameStateDispatchContext.Provider value={dispatch}>
+        {children}
+      </GameStateDispatchContext.Provider>
+    </GameStateContext.Provider>
+  );
+}
+
+// ...
+```
+
+Context API 적용에 대한 더 자세한 내용은 [Context API와 useReducer를 사용해서 전역적으로 변수 사용하기](https://heony704.github.io/context/) 포스트에서 확인하실 수 있습니다.
 
 ## 직접 실행하기
 
@@ -143,8 +127,17 @@ export function useIntervalRandomQuiz() {
 
 ### 1. 프로젝트 복제
 
+프로젝트 자체를 복제하고 싶다면 이렇게,
+
 ```bash
 git clone https://github.com/heony704/prove-your-cat-love.git
+cd prove-your-cat-love
+```
+
+프로젝트의 해당 브랜치만 복제하고 싶다면 이렇게 해주세요.
+
+```bash
+git clone --branch state/context https://github.com/heony704/prove-your-cat-love.git
 cd prove-your-cat-love
 ```
 
