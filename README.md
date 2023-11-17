@@ -66,7 +66,7 @@ src
 
 ## 신경 쓴 부분
 
-### `useCallback`과 `React.memo`를 이용하여 컴포넌트 리렌더링 최적화
+### `useCallback`과 `React.memo`를 이용하여 컴포넌트 렌더링 최적화
 
 `Game` 컴포넌트 안의 퀴즈 관련 상태가 변하면 life, score 값이 변하지 않더라도 `LifeBaord`, `ScoreBoard`, `ScoreAlarm` 컴포넌트가 리렌더링되는 문제가 있었습니다.  
 `LifeBaord`, `ScoreBoard`, `ScoreAlarm` 컴포넌트를 `React.memo`로 감싸 life, score 상태가 변하지 않는다면 리렌더링되지 않도록 최적화했습니다.
@@ -133,6 +133,16 @@ export function useIntervalRandomQuiz() {
 | webp로 변환 | 1.1MB     | **92%**                 |
 
 자세한 내용은 [리액트 이미지 사이즈 최적화](https://heony704.github.io/react-image-size-optimization/) 포스트와 [Pull Request](https://github.com/heony704/prove-your-cat-love/pull/4)에서 확인할 수 있습니다.
+
+### `Context API`, `React Redux`를 적용하여 변수를 전역적으로 사용
+
+주요 컴포넌트인 `Game`, `GameResult` 컴포넌트 모두에서 사용되는 상태들을 전역적으로 관리하여 props drilling을 줄였습니다.
+
+Context API를 적용한 버전은 [state/context 브랜치](https://github.com/heony704/prove-your-cat-love/tree/state/context)에서, React Redux를 적용한 버전은 [state/redux 브랜치](https://github.com/heony704/prove-your-cat-love/tree/state/redux)에서 확인할 수 있습니다.  
+각 기술을 적용한 과정과 기술별 비교는 아래 포스트에 정리했습니다.
+
+- [Context API와 useReducer를 사용해서 전역적으로 변수 사용하기](https://heony704.github.io/context/)
+- [React Redux 적용하기](https://heony704.github.io/react-redux/)
 
 ## 직접 실행하기
 
