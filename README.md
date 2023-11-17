@@ -1,9 +1,9 @@
 <h1 align=center>[Context] 고양이 정말 좋아하세요?</h1>
 
 <div align=center>
-  <img src="https://img.shields.io/badge/react-61DAFB?style=flat&logo=react&logoColor=black">
-  <img src="https://img.shields.io/badge/vite-646CFF?style=flat&logo=vite&logoColor=white">
-  <img src="https://img.shields.io/badge/typescript-3178C6?style=flat&logo=typescript&logoColor=white">
+  <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black">
+  <img src="https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white">
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white">
   <img src="https://img.shields.io/badge/styled components-DB7093?style=flat&logo=styledcomponents&logoColor=white">
 </div>
 <br>
