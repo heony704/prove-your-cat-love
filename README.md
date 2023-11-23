@@ -10,7 +10,7 @@
 <br>
 
 <div align=center>
-  <img src="https://github.com/heony704/prove-your-cat-love/assets/36994104/7cf22d5e-26b4-4ba1-af96-0a9cc4942d6a" width="700">
+  <img src="https://github.com/heony704/prove-your-cat-love/assets/36994104/6fdef525-9c87-4757-b15b-e002b601245e" width="700">
 </div>
 <br>
 
@@ -18,6 +18,11 @@
 고양이 정보랑 고양이 자랑을 담아 만든 퀴즈게임 사이트입니다.<br>
 고양이 애호가라면 쉽게 고득점을 얻을 수 있습니다.<br>
 퀴즈를 세번 틀리거나 퀴즈가 세개 넘게 쌓일 경우 게임이 끝나니 주의하세요.
+</div>
+<br>
+
+<div align=center>
+  <a target="_blank" href="https://prove-your-cat-love.netlify.app">고양이 사랑 테스트하기</a>
 </div>
 
 ## 기능
