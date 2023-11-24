@@ -1,11 +1,11 @@
-<h1 align=center>[Redux] 고양이 정말 좋아하세요?</h1>
+<h1 align=center>[Zustand] 고양이 정말 좋아하세요?</h1>
 
 <div align=center>
   <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black">
   <img src="https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white">
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white">
   <img src="https://img.shields.io/badge/styled components-DB7093?style=flat&logo=styledcomponents&logoColor=white">
-  <img src="https://img.shields.io/badge/Redux-764ABC?style=flat&logo=redux&logoColor=white">
+  <img src="https://img.shields.io/badge/Zustand-433E38?style=flat&logoColor=white">
 </div>
 <br>
 
@@ -57,12 +57,9 @@ src
  ┃ ┣ useLife.ts
  ┃ ┣ useQuizzes.ts
  ┃ ┗ useToast.tsx
- ┣ redux
- ┃ ┣ slices // Redux State Slices
- ┃ ┃ ┣ gameState.ts
- ┃ ┃ ┗ score.ts
- ┃ ┣ hooks.ts // Type이 적용된 useDispatch, useSelector 훅들
- ┃ ┗ store.ts // Redux Store
+ ┣ store
+ ┃ ┣ useGameStateStore.ts // 게임 상태 store
+ ┃ ┗ useScoreStore.ts // 게임 점수 store
  ┣ types
  ┃ ┗ index.ts
  ┣ utils
@@ -76,52 +73,39 @@ src
 
 ## 신경 쓴 부분
 
-## `React Redux`를 적용하여 변수를 전역적으로 관리
+## `Zustand`를 적용하여 변수를 전역적으로 관리
 
-주요 컴포넌트인 `Game`, `GameResult` 컴포넌트 모두에서 사용되는 상태들을 React Redux를 통해 store로 관리해 props drilling을 줄였습니다.
+주요 컴포넌트인 `Game`, `GameResult` 컴포넌트 모두에서 사용되는 상태들을 Zustand를 통해 store로 관리해 props drilling을 줄였습니다.
 
-`createSlice` 함수로 action과 reducer를 만들고 reducer들을 store에 연결했습니다.
+```ts
+import { create } from 'zustand';
 
-```tsx
-const gameStateSlice = createSlice({
-  name: 'gameState',
-  initialState,
-  reducers: {
-    ready: state => {
-      state.value = 'ready';
-    },
-    start: state => {
-      state.value = 'playing';
-    },
-    end: state => {
-      state.value = 'over';
-    },
-  },
-});
-
-export const { ready, start, end } = gameStateSlice.actions;
-export default gameStateSlice.reducer;
+export const useGameStateStore = create<State & Action>(set => ({
+  gameState: 'ready',
+  readyGame: () => set({ gameState: 'ready' }),
+  startGame: () => set({ gameState: 'playing' }),
+  endGame: () => set({ gameState: 'over' }),
+}));
 ```
 
 ```tsx
-const store = configureStore({
-  reducer: {
-    gameState: gameStateReducer,
-    score: scoreReducer,
-  },
-});
+import { useGameStateStore } from 'src/store/useGameStateStore';
 
-export default store;
+export default function App() {
+  const { gameState, startGame } = useGameStateStore();
+
+  return (
+    <>
+      <Title>고양이 정말 좋아하세요?</Title>
+      <StartButton onClick={startGame} disabled={gameState !== 'ready'}>
+        증명하기
+      </StartButton>
+      {gameState === 'playing' && <Game />}
+      {gameState === 'over' && <GameResult />}
+    </>
+  );
+}
 ```
-
-useDispatch, useSelector에 타입을 적용한 훅을 만들어 타입 문제가 발생하지 않도록 했습니다.
-
-```tsx
-export const useTypedDispatch: () => AppDispatch = useDispatch;
-export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
-```
-
-React Redux 적용에 대한 더 자세한 내용은 [React Redux 적용하기](https://heony704.github.io/react-redux/) 포스트에서 확인하실 수 있습니다.
 
 ## 직접 실행하기
 
@@ -139,7 +123,7 @@ cd prove-your-cat-love
 프로젝트의 해당 브랜치만 복제하고 싶다면 이렇게 해주세요.
 
 ```bash
-git clone --branch state/redux https://github.com/heony704/prove-your-cat-love.git
+git clone --branch state/zustand https://github.com/heony704/prove-your-cat-love.git
 cd prove-your-cat-love
 ```
 
