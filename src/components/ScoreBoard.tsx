@@ -1,9 +1,10 @@
 import React from 'react';
 import { styled } from 'styled-components';
-import { useTypedSelector } from 'src/redux/hooks';
+import { useScoreStore } from 'src/store/useScoreStore';
 
 function ScoreBoard() {
-  const score = useTypedSelector(state => state.score.value);
+  const { score } = useScoreStore();
+
   return <Wrapper>SCORE: {score}</Wrapper>;
 }
 

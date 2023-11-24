@@ -1,21 +1,20 @@
 import { styled } from 'styled-components';
 import { HiX } from 'react-icons/hi';
-import { useTypedSelector, useTypedDispatch } from 'src/redux/hooks';
-import { ready } from 'src/redux/slices/gameState';
-import { reset } from 'src/redux/slices/score';
+import { useGameStateStore } from 'src/store/useGameStateStore';
+import { useScoreStore } from 'src/store/useScoreStore';
 import { getStyleByScore } from 'src/data/scoreTheme';
 import Picture from 'src/components/Picture';
 import { Theme } from 'src/types';
 
 export default function GameResult() {
-  const score = useTypedSelector(state => state.score.value);
-  const dispatch = useTypedDispatch();
+  const { score, resetScore } = useScoreStore();
+  const { readyGame } = useGameStateStore();
 
   const { theme, img } = getStyleByScore(score);
 
   const onClose = () => {
-    dispatch(ready());
-    dispatch(reset());
+    readyGame();
+    resetScore();
   };
 
   return (
