@@ -139,12 +139,12 @@ export function useIntervalRandomQuiz() {
 
 자세한 내용은 [리액트 이미지 사이즈 최적화](https://heony704.github.io/react-image-size-optimization/) 포스트와 [Pull Request](https://github.com/heony704/prove-your-cat-love/pull/4)에서 확인할 수 있습니다.
 
-### `Context API`, `React Redux`를 적용하여 변수를 전역적으로 사용
+### `Context API`, `React Redux`, `Zustand`를 적용하여 변수를 전역적으로 사용
 
 주요 컴포넌트인 `Game`, `GameResult` 컴포넌트 모두에서 사용되는 상태들을 전역적으로 관리하여 props drilling을 줄였습니다.
 
-Context API를 적용한 버전은 [state/context 브랜치](https://github.com/heony704/prove-your-cat-love/tree/state/context)에서, React Redux를 적용한 버전은 [state/redux 브랜치](https://github.com/heony704/prove-your-cat-love/tree/state/redux)에서 확인할 수 있습니다.  
-각 기술을 적용한 과정과 기술별 비교는 아래 포스트에 정리했습니다.
+Context API는 [state/context 브랜치](https://github.com/heony704/prove-your-cat-love/tree/state/context)에서, React Redux는 [state/redux 브랜치](https://github.com/heony704/prove-your-cat-love/tree/state/redux)에서, Zustand는 [state/zustand 브랜치](https://github.com/heony704/prove-your-cat-love/tree/state/zustand) 확인할 수 있습니다.  
+기술을 적용한 과정과 기술별 비교는 아래 포스트에 정리했습니다.
 
 - [Context API와 useReducer를 사용해서 전역적으로 변수 사용하기](https://heony704.github.io/context/)
 - [React Redux 적용하기](https://heony704.github.io/react-redux/)
